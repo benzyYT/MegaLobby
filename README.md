@@ -1,1 +1,1 @@
-# MegaLobby
+Do not reupload                     |                COPYRIGHT
