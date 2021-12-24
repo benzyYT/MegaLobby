@@ -1,0 +1,1209 @@
+options:
+    servername: Ilias #Gib hier den Namen deines Minecraftserver ohne [] oder sonstigem.
+    lobbyworld: world #Gib hier den Namen der Welt ein, in der die Lobby ist.
+    customskull: WichtigerNico #Gib hier deinen Minecraft Namen ein, dadurch erscheint dein Kopf im Gadgetmenu
+    shop: true #Aktiviere den Shop im Profilmenu | true = an, false = aus
+    twitter: benzyyoutube #Gib hier deinen Twitter Namen ohne @ ein.
+    cookiesound: false #Der Ton wenn man auf den CookieClicker drückt | true = an, false = aus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+# Wenn du nicht weißt was du tust, solltest du ab hier nichts editieren. Wenn du Hilfe brauchst, schreib mich auf Discord an: benzy#0001
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+on load:
+	text from "https://veronoxrp.de/raw/382LllhO" is not "1.0.1"
+	send "&m--------------------------------------------------------------"
+	send ""
+	send "&cVeraltete Version des Lobby Skripts, bitte lade dir die neue Version herunter, oder es könnten schwerwiegende Bugs auftreten."
+	send ""
+	send "&m--------------------------------------------------------------"
+	wait 20 minutes
+	send "&m--------------------------------------------------------------"
+	send ""
+	send "&cVeraltete Version des Lobby Skripts, bitte lade dir die neue Version herunter, oder es könnten schwerwiegende Bugs auftreten."
+	send ""
+	send "&m--------------------------------------------------------------"
+	wait 20 minutes
+	send "&m--------------------------------------------------------------"
+	send ""
+	send "&cVeraltete Version des Lobby Skripts, bitte lade dir die neue Version herunter, oder es könnten schwerwiegende Bugs auftreten."
+	send ""
+	send "&m--------------------------------------------------------------"
+	wait 20 minutes
+	send "&m--------------------------------------------------------------"
+	send ""
+	send "&cVeraltete Version des Lobby Skripts, bitte lade dir die neue Version herunter, oder es könnten schwerwiegende Bugs auftreten."
+	send ""
+	send "&m--------------------------------------------------------------"
+	wait 20 minutes
+	send "&m--------------------------------------------------------------"
+	send ""
+	send "&cVeraltete Version des Lobby Skripts, bitte lade dir die neue Version herunter, oder es könnten schwerwiegende Bugs auftreten."
+	send ""
+	send "&m--------------------------------------------------------------"
+	wait 20 minutes
+	send "&m--------------------------------------------------------------"
+	send ""
+	send "&cVeraltete Version des Lobby Skripts, bitte lade dir die neue Version herunter, oder es könnten schwerwiegende Bugs auftreten."
+	send ""
+	send "&m--------------------------------------------------------------"
+	
+
+
+
+
+
+
+
+
+
+on inventory click:
+    if {build.%player%} is 1:
+        stop
+
+    else:
+        cancel event
+
+on drop:
+    if {build.%player%} is 1:
+        stop
+
+    else:
+        cancel event
+
+on break:
+    if {build.%player%} is 1:
+        stop
+
+    else:
+        cancel event
+        send "&7[&4{@servername}&7] &cDu kannst hier nicht abbauen&7."
+on place:
+    if {build.%player%} is 1:
+        stop
+
+    else:
+        cancel event
+        send "&7[&4{@servername}&7] &cDu kannst hier nicht bauen&7."
+
+on chat:
+    if player has permission "lobby.chat":
+        cancel event
+        send "&8%player%: &7%message%"
+    else:
+        cancel event
+        send "&7[&4{@servername}&7] &aDu brauchst einen Rang um zu chatten :)&7."
+
+on join:
+    if {spawn} is set:
+        set join message to "&7[&a{@servername}&7] &c%player% &7ist der Lobby beigetreten."
+        send ""
+        send "&7-------------------------------------"
+        send ""
+        send ""
+        send "&a&lWillkommen auf {@servername}"
+        send ""
+        send ""
+        send "&7-------------------------------------"
+        send ""
+        set {build.%player%} to 0
+        set {fly.%player%} to 0
+        teleport player to {spawn}
+        set player's gamemode to adventure
+    else:
+        set join message to "&7[&a{@servername}&7] &c%player% &7ist der Lobby beigetreten."
+        send ""
+        send "&7-------------------------------------"
+        send ""
+        send ""
+        send "&c&lWir konnten dich leider nicht zum Spawn"
+        send "&c&lteleportieren, da keiner gesetzt wurde."
+        send ""
+        send ""
+        send "&7-------------------------------------"
+        send ""
+        set {build.%player%} to 0
+        set {fly.%player%} to 0
+        set player's gamemode to adventure
+
+on quit:
+    set quit message to "&7[&a{@servername}&7] &c%player% &7hat die Lobby verlassen."
+    clear player's inventory
+    clear player's boots
+
+command /setspawn:
+    permission: lobby.setspawn
+    permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+    trigger:
+        set {spawn} to location of player
+        send "&7[&4{@servername}&7] &aDer Spawn wurde gesetzt."
+
+command /spawn:
+    trigger:
+        if {spawn} is set:
+            teleport player to {spawn}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        if {spawn} is not set:
+            send "&7[&4{@servername}&7] &cDer Spawn wurde noch nicht gesetzt&7 &8(&a/setspawn&8)&7."
+
+command /delspawn:
+    permission: lobby.delspawn
+    permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+    trigger:
+        delete {spawn}
+        send "&7[&4{@servername}&7] &aDer Spawn wurde erfolgreich entfernt."
+
+command /build:
+    permission: lobby.build
+    permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+    trigger:
+        if {build.%player%} is 0:
+            set {build.%player%} to 1
+            clear player's inventory
+            send "&7[&4{@servername}&7] &aDer Baumodus wurde aktiviert&7."
+            set player's gamemode to creative
+
+        else:
+            set {build.%player%} to 0
+            send "&7[&4{@servername}&7] &cDer Baumodus wurde deaktiviert&7."
+            set player's gamemode to adventure
+            set slot 0 of player to compass named "&8●&7 Teleporter"
+            set slot 2 of player to lime wool named "&8●&a Spieler sichtbar"
+            set slot 4 of player to firework rocket named "&8●&b Jetpack"
+            set slot 6 of player to chest named "&8●&6 Profil"
+            set slot 8 of player to tnt named "&8●&c Silentlobby"
+
+command /output:
+    description: Developer tool
+    trigger:
+        send "&m-----------------------------------------------------"
+        send ""
+        send "&aBuildmode: &c%{build.%player%}%"
+        send "&aFlymode: &c%{fly.%player%}%"
+        send "&aLobbyworld: &c%{@lobbyworld}%"
+        send "&aLobbyworld: &c{@servername}"
+        send "&aBoots: &c%{boots.%player%}%"
+        send ""
+        send "&m-----------------------------------------------------"
+        send ""
+        send "&6Developer Output (&7Dev: benzyYT&6)"
+
+on damage:
+    cancel event
+
+command heal:
+    permission: lobby.heal
+    permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+    trigger:
+        heal player
+        feed player
+        send "&7[&4{@servername}&7] &aDu wurdest geheilt&7. "
+
+command /fly:
+    permission: lobby.fly
+    permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+    trigger:
+        if {fly.%player%} is 1:
+            set player's flight mode to false
+            set {fly.%player%} to 0
+            send "&7[&4{@servername}&7] &cDer Flugmodus wurde deaktiviert&7. "
+        
+        else:
+            set player's flight mode to true
+            set {fly.%player%} to 1
+            send "&7[&4{@servername}&7] &aDer Flugmodus wurde aktivert&7. "
+        
+on weather change:
+    cancel event
+
+
+command /day:
+    permission: lobby.time
+    permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+    trigger:
+        set time to day
+        send "&7[&4{@servername}&7] &aDie Zeit wurde auf &7""&cTag&7"" &agesetzt&7. "
+
+command /night:
+    permission: lobby.time
+    permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+    trigger:
+        set time to night
+        send "&7[&4{@servername}&7] &aDie Zeit wurde auf &7""&cNacht&7"" &agesetzt&7. "
+
+on click with compass:
+	open chest with 5 rows named "&8»&3 {@servername} &8| &3Navigation" to player
+	wait 5 tick
+	format slot 1 of player with gray glass pane named " " to be unstealable
+	format slot 2 of player with gray glass pane named " " to be unstealable
+	format slot 3 of player with gray glass pane named " " to be unstealable
+	format slot 4 of player with gray glass pane named " " to be unstealable
+	format slot 5 of player with gray glass pane named " " to be unstealable
+	format slot 6 of player with gray glass pane named " " to be unstealable
+	format slot 7 of player with gray glass pane named " " to be unstealable
+	format slot 9 of player with gray glass pane named " " to be unstealable
+	format slot 10 of player with gray glass pane named " " to be unstealable
+	format slot 12 of player with gray glass pane named " " to be unstealable
+	format slot 13 of player with gray glass pane named " " to be unstealable
+	format slot 14 of player with gray glass pane named " " to be unstealable
+	format slot 16 of player with gray glass pane named " " to be unstealable
+	format slot 17 of player with gray glass pane named " " to be unstealable
+	format slot 18 of player with gray glass pane named " " to be unstealable
+	format slot 21 of player with gray glass pane named " " to be unstealable
+	format slot 23 of player with gray glass pane named " " to be unstealable
+	format slot 26 of player with gray glass pane named " " to be unstealable
+	format slot 27 of player with gray glass pane named " " to be unstealable
+	format slot 28 of player with gray glass pane named " " to be unstealable
+	format slot 30 of player with gray glass pane named " " to be unstealable
+	format slot 31 of player with gray glass pane named " " to be unstealable
+	format slot 32 of player with gray glass pane named " " to be unstealable
+	format slot 34 of player with gray glass pane named " " to be unstealable
+	format slot 35 of player with gray glass pane named " " to be unstealable
+	format slot 37 of player with gray glass pane named " " to be unstealable
+	format slot 38 of player with gray glass pane named " " to be unstealable
+	format slot 39 of player with gray glass pane named " " to be unstealable
+	format slot 41 of player with gray glass pane named " " to be unstealable
+	format slot 42 of player with gray glass pane named " " to be unstealable
+	format slot 43 of player with gray glass pane named " " to be unstealable
+	
+	set {_p} to "%player%" parsed as player
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 0 of player with skull of {_p} named "&8×&b Top10" to close then run [execute player command "/1"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 8 of player with 1 gold nugget named "&8×&b Weihnachtsbaum" to close then run [execute player command "/2"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 11 of player with 1 wooden sword named "&8×&b TTT" to close then run [execute player command "/3"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 15 of player with 1 wool named "&8×&b WoolBattle" to close then run [execute player command "/4"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 19 of player with 1 bed named "&8×&b BedWars" to close then run [execute player command "/5"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 20 of player with 1 grass block named "&8×&b SkyWars" to close then run [execute player command "/6"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 22 of player with magma cream named "&8×&b Spawn" to close then run [execute player command "/spawn"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 24 of player with 1 diamond named "&8×&b Kommt noch!" to close then run [execute player command "/13"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 25 of player with 1 diamond sword named "&8×&b SkyBlock" to close then run [execute player command "/7"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 29 of player with 1 stick named "&8×&b KnockIT" to close then run [execute player command "/8"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 33 of player with diamond named "&8×&b Kommt noch!" to close then run [execute player command "/13"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 36 of player with 1 cookie named "&8×&b CookieClicker" to close then run [execute player command "/10"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 40 of player with 1 gold shovel named "&8×&b BauEvent" to close then run [execute player command "/12"]
+	wait 5 tick
+	play sound "BLOCK_ANVIL_FALL" with volume 100 and pitch 1 to player
+	format slot 44 of player with 1 ender chest named "&8×&b Reward/CaseOpening" to close then run [execute player command "/11"]
+	play sound "ENTITY_PLAYER_LEVELUP" with volume 100 and pitch 1 to player
+
+
+command /set [<text>]:
+	permission: lobby.set
+	permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+	trigger:
+		if arg 1 is not set:
+			send "&8&m----------------------------"
+			send "&cTop10"
+			send "&cWeihnachtsbaum"
+			send "&cTTT"
+			send "&cWoolBattle"
+			send "&cSkyWars"
+			send "&cSkyBlock"
+			send "&cKnockIT"
+			send "&cNexUnity"
+			send "&cCookieClicker"
+			send "&cReward"
+			send "&cBauevent"
+			send "&8&m----------------------------"
+		if arg 1 is "Top10":
+			set {Top10} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cTop10&7 erfolgreich &agesetzt&7."
+		if arg 1 is "Weihnachtsbaum":
+			set {Weihnachtsbaum} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cWeihnachtsbaum&7 erfolgreich &agesetzt&7."		
+		if arg 1 is "TTT":
+			set {TTT} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cTTT&7 erfolgreich &agesetzt&7."		
+		if arg 1 is "WoolBattle":
+			set {WoolBattle} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cWoolBattle&7 erfolgreich &agesetzt&7."
+		if arg 1 is "BedWars":
+			set {BedWars} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cBedWars&7 erfolgreich &agesetzt&7."				
+		if arg 1 is "SkyWars":
+			set {SkyWars} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cSkyWars&7 erfolgreich &agesetzt&7."
+		if arg 1 is "SkyBlock":
+			set {SkyBlock} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cSkyBlock&7 erfolgreich &agesetzt&7."			
+		if arg 1 is "KnockIT":
+			set {KnockIT} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cKnockIT&7 erfolgreich &agesetzt&7."			
+		if arg 1 is "NexUnity":
+			set {NexUnity} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cNexUnity&7 erfolgreich &agesetzt&7."			
+		if arg 1 is "CookieClicker":
+			set {CookieClicker} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cCookieClicker&7 erfolgreich &agesetzt&7."			
+		if arg 1 is "Reward":
+			set {Reward} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cReward/CaseOpening&7 erfolgreich &agesetzt&7."
+		if arg 1 is "Bauevent":
+			set {BauEvent} to location of player
+			send "&7[&4{@servername}&7] &7Spawn für &cBau Event&7 erfolgreich &agesetzt&7."	
+
+command /unset [<text>]:
+	permission: lobby.unset
+	permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+	trigger:
+		if arg 1 is not set:
+			send "&8&m----------------------------"
+			send "&cTop10"
+			send "&cWeihnachtsbaum"
+			send "&cTTT"
+			send "&cWoolBattle"
+			send "&cSkyWars"
+			send "&cSkyBlock"
+			send "&cKnockIT"
+			send "&cNexUnity"
+			send "&cCookieClicker"
+			send "&cReward/CaseOpening"
+			send "&8&m----------------------------"
+		if arg 1 is "Top10":
+			delete {Top10}
+			send "&7[&4{@servername}&7] &7Spawn für &cTop10&7 erfolgreich &centfernt&7."
+		if arg 1 is "Weihnachtsbaum":
+			delete {Weihnachtsbaum}
+			send "&7[&4{@servername}&7] &7Spawn für &cWeihnachtsbaum&7 erfolgreich &centfernt&7."		
+		if arg 1 is "TTT":
+			delete {TTT}
+			send "&7[&4{@servername}&7] &7Spawn für &cTTT&7 erfolgreich &centfernt&7."		
+		if arg 1 is "WoolBattle":
+			delete {WoolBattle}
+			send "&7[&4{@servername}&7] &7Spawn für &cWoolBattle&7 erfolgreich &centfernt&7."
+		if arg 1 is "BedWars":
+			delete {BedWars}
+			send "&7[&4{@servername}&7] &7Spawn für &cBedWars&7 erfolgreich &centfernt&7."				
+		if arg 1 is "SkyWars":
+			delete {SkyWars}
+			send "&7[&4{@servername}&7] &7Spawn für &cSkyWars&7 erfolgreich &centfernt&7."
+		if arg 1 is "SkyBlock":
+			delete {SkyBlock}
+			send "&7[&4{@servername}&7] &7Spawn für &cSkyBlock&7 erfolgreich &centfernt&7."			
+		if arg 1 is "KnockIT":
+			delete {KnockIT}
+			send "&7[&4{@servername}&7] &7Spawn für &cKnockIT&7 erfolgreich &centfernt&7."			
+		if arg 1 is "NexUnity":
+			delete {NexUnity}
+			send "&7[&4{@servername}&7] &7Spawn für &cNexUnity&7 erfolgreich &centfernt&7."			
+		if arg 1 is "CookieClicker":
+			delete {CookieClicker}
+			send "&7[&4{@servername}&7] &7Spawn für &cCookieClicker&7 erfolgreich &centfernt&7."			
+		if arg 1 is "Reward":
+			delete {Reward}
+			send "&7[&4{@servername}&7] &7Spawn für &cReward/CaseOpening&7 erfolgreich &centfernt&7."	
+	
+
+
+
+command /1:
+    trigger:
+        if {Top10} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {Top10}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7Top10 &awurde noch nicht gesetzt&7. "
+command /2:
+    trigger:
+        if {Weihnachtsbaum} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {Weihnachtsbaum}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7Weihnachtsbaum &awurde noch nicht gesetzt&7. "
+command /3:
+    trigger:
+        if {TTT} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {TTT}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7TTT &awurde noch nicht gesetzt&7. "
+command /4:
+    trigger:
+        if {WoolBattle} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {WoolBattle}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7Wool Battle &awurde noch nicht gesetzt&7. "
+command /5:
+    trigger:
+        if {BedWars} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {BedWars}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7Bed Wars &awurde noch nicht gesetzt&7. "
+command /6:
+    trigger:
+        if {SkyWars} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {SkyWars}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7Sky Wars &awurde noch nicht gesetzt&7. "	
+command /7:
+    trigger:
+        if {SkyBlock} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {SkyBlock}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7SkyBlock &awurde noch nicht gesetzt&7. "
+command /8:
+    trigger:
+        if {KnockIT} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {KnockIT}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7KnockIT &awurde noch nicht gesetzt&7. "	
+command /9:
+    trigger:
+        if {NexUnity} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {NexUnity}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7NexUnity &awurde noch nicht gesetzt&7. "
+command /10:
+    trigger:
+        if {CookieClicker} is set:
+            push the player up at speed 3.0
+            apply blindness 3 to the player for 30 ticks
+            wait 20 tick
+            teleport player to {CookieClicker}
+            play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+        else:
+            send "&7[&4{@servername}&7] &aDer Spawn für &7Cookie Clicker &awurde noch nicht gesetzt&7. "
+command /11:
+	trigger:
+		if {Reward} is set:
+			push the player up at speed 3.0
+			apply blindness 3 to the player for 30 ticks
+			wait 20 tick
+			teleport player to {Reward}
+			play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+		else:
+			send "&7[&4{@servername}&7] &aDer Spawn für &7Reward/CaseOpening &awurde noch nicht gesetzt&7. "
+			
+command /12:
+	trigger:
+		if {BauEvent} is set:
+			push the player up at speed 3.0
+			apply blindness 3 to the player for 30 ticks
+			wait 20 tick
+			teleport player to {BauEvent}
+			play sound "BLOCK_LAVA_POP" with volume 100 and pitch 1 to player
+		else:
+			send "&7[&4{@servername}&7] &aDer Spawn für &7Bau Event &a wurde noch nicht gesetzt&7. "
+			
+command /13:
+	trigger:
+		send "&7[&4{@servername}&7] &aDieses Feature ist aktuell noch in Arbeit&7. "
+
+command /help:
+    trigger:
+        send "&8&m-----------------------------------------------------"
+        send ""
+        send "&7/&6setspawn &7- &bSetze den Spawn"
+        send "&7/&6set &7- &bSetze die Kompassspawns"
+        send "&7/&6unset &7- &bEntferne die Kompassspawns"
+        send "&7/&6fly &7- &bAktivere/Deaktiviere den Flugmodus"
+        send "&7/&6build &7- &bAktivere/Deaktiviere den Baumodus"
+        send ""
+        send "&8&m-----------------------------------------------------"
+
+on join:
+    set slot 0 of player to compass named "&8●&7 Teleporter"
+    set slot 2 of player to lime wool named "&8●&a Spieler sichtbar"
+    set slot 4 of player to firework rocket named "&8●&b Jetpack"
+    set slot 6 of player to chest named "&8●&6 Profil"
+    set slot 8 of player to tnt named "&8●&c Silentlobby"
+
+on join:
+		set name of sidebar of player to "&8●&a {@servername}"
+		set score "&7" in sidebar of player to 15
+		set score "&7Dein Profil:  " in sidebar of player to 14
+		set score "&8➡ &a%player%  " in sidebar of player to 13
+		set score "&d" in sidebar of player to 12
+		set score "&r" in sidebar of player to 11
+		set score "&7Deine Coins:  " in sidebar of player to 10 
+		set score "&8➡&e %{coins.%player%}%" in sidebar of player to 9
+		set score "&a" in sidebar of player to 8
+		set score "&7Deine Cookies:  " in sidebar of player to 7
+		set score "&8➡ &b%{cookieklicker%player%}%" in sidebar of player to 6
+		set score "&8" in sidebar of player to 5
+		set score "&7Twitter:  " in sidebar of player to 4
+		set score "&8➡ &e@{@twitter}  " in sidebar of player to 3
+		set score "&d" in sidebar of player to 2
+		set score "&7Server:  " in sidebar of player to 1
+		set score "&8➡ &bLobby-1"   in sidebar of player to 0
+
+
+
+
+every 0.1 second in "{@lobbyworld}":
+	loop all players:
+		wipe loop-player's sidebar
+		set name of sidebar of loop-player to "&8●&a {@servername}"
+		set score "&7" in sidebar of loop-player to 15
+		set score "&7Dein Profil:  " in sidebar of loop-player to 14
+		set score "&8➡ &a%loop-player%  " in sidebar of loop-player to 13
+		set score "&d" in sidebar of loop-player to 12
+		set score "&r" in sidebar of loop-player to 11
+		set score "&7Deine Coins:  " in sidebar of loop-player to 10 
+		set score "&8➡&e %{coins.%loop-player%}%" in sidebar of loop-player to 9
+		set score "&a" in sidebar of loop-player to 8
+		set score "&7Deine Cookies:  " in sidebar of loop-player to 7
+		set score "&8➡ &b%{cookieclicker.%loop-player%}%" in sidebar of loop-player to 6
+		set score "&8" in sidebar of loop-player to 5
+		set score "&7Twitter:  " in sidebar of loop-player to 4
+		set score "&8➡ &e@{@twitter}  " in sidebar of loop-player to 3
+		set score "&d" in sidebar of loop-player to 2
+		set score "&7Server:  " in sidebar of loop-player to 1
+		set score "&8➡ &bLobby-1"   in sidebar of loop-player to 0
+
+on click with lime wool:
+	hide all players in player's world from player
+	wait 1 tick
+	set slot 2 of player to red wool named "&8●&c Spieler unsichtbar"
+	play sound "BLOCK_SNOW_STEP" with volume 100 and pitch 1 to player
+	
+
+on click with red wool:
+	reveal all players in player's world from player
+	wait 1 tick
+	clear slot 2 of player
+	set slot 2 of player to lime wool named "&8●&a Spieler sichtbar"
+	play sound "BLOCK_SNOW_STEP" with volume 100 and pitch 1 to player
+	
+on click with nether star:
+	send "Forall"
+	
+on click with firework rocket:
+	if the player is on the ground:
+		play sound "ENTITY_FIREWORK_LAUNCH" with volume 100 and pitch 1 to player
+		push the player up at speed 2.0
+		wait 5 ticks
+		push the player forwards at speed 2.0
+		set slot 4 of player to gunpowder named "&8●&c Warte noch..."
+		wait 10 seconds
+		set slot 4 of player to firework rocket named "&8●&b Jetpack"
+	else:
+		send "&7[&4{@servername}&7] &cDu kannst das Jetpack nur auf dem Boden nutzen&7."
+		play sound "BLOCK_ANVIL_PLACE" with volume 100 and pitch 1 to player
+		wait 1 second
+		set slot 4 of player to firework rocket named "&8●&b Jetpack"
+		
+on click with gunpowder:
+	play sound "BLOCK_ANVIL_PLACE" with volume 100 and pitch 1 to player
+	send "&7[&4{@servername}&7] &cBitte warte noch&7..."
+
+
+on click with chest:
+	wait 1 tick
+	open chest with 5 rows named "&8»&e Profil" to player
+	wait 1 tick
+	format slot 0 of player with gray glass pane named " " to be unstealable
+	format slot 1 of player with gray glass pane named " " to be unstealable
+	format slot 2 of player with gray glass pane named " " to be unstealable
+	format slot 3 of player with gray glass pane named " " to be unstealable
+	format slot 4 of player with gray glass pane named " " to be unstealable
+	format slot 5 of player with gray glass pane named " " to be unstealable
+	format slot 6 of player with gray glass pane named " " to be unstealable
+	format slot 7 of player with gray glass pane named " " to be unstealable
+	format slot 8 of player with gray glass pane named " " to be unstealable
+	format slot 9 of player with gray glass pane named " " to be unstealable
+	format slot 10 of player with gray glass pane named " " to be unstealable
+	format slot 11 of player with gray glass pane named " " to be unstealable
+	format slot 12 of player with gray glass pane named " " to be unstealable
+	format slot 13 of player with gray glass pane named " " to be unstealable
+	format slot 15 of player with gray glass pane named " " to be unstealable
+	format slot 16 of player with gray glass pane named " " to be unstealable
+	format slot 17 of player with gray glass pane named " " to be unstealable
+	format slot 18 of player with gray glass pane named " " to be unstealable
+	format slot 19 of player with gray glass pane named " " to be unstealable
+	format slot 21 of player with gray glass pane named " " to be unstealable
+	format slot 23 of player with gray glass pane named " " to be unstealable
+	format slot 25 of player with gray glass pane named " " to be unstealable
+	format slot 26 of player with gray glass pane named " " to be unstealable
+	format slot 27 of player with gray glass pane named " " to be unstealable
+	format slot 28 of player with gray glass pane named " " to be unstealable
+	format slot 29 of player with gray glass pane named " " to be unstealable
+	format slot 31 of player with gray glass pane named " " to be unstealable
+	format slot 33 of player with gray glass pane named " " to be unstealable
+	format slot 34 of player with gray glass pane named " " to be unstealable
+	format slot 35 of player with gray glass pane named " " to be unstealable
+	format slot 37 of player with gray glass pane named " " to be unstealable
+	format slot 38 of player with gray glass pane named " " to be unstealable
+	format slot 39 of player with gray glass pane named " " to be unstealable
+	format slot 40 of player with gray glass pane named " " to be unstealable
+	format slot 41 of player with gray glass pane named " " to be unstealable
+	format slot 42 of player with gray glass pane named " " to be unstealable
+	format slot 43 of player with gray glass pane named " " to be unstealable
+	format slot 44 of player with gray glass pane named " " to be unstealable
+	wait 5 tick
+	format slot 12 of player with skull of "MHF_YouTube" parsed as offline player named "&8»&6 Köpfe &8«" to close then run [execute player command "/skulls"]
+	format slot 14 of player with lava bucket named "&8»&4 Effekte &8«" to close then run [execute player command "/effekte"]
+	format slot 20 of player with skull of "MHF_Chest" parsed as offline player named "&8»&2 Spezial Köpfe &8«" to close then run [execute player command "/specialskulls"]
+	format slot 22 of player with apple named "&8»&b Shop  &8«" to close then run [execute player command "/shop"]
+	format slot 24 of player with red clay named "&8»&2 Ballons &8«" to be unstealable
+	format slot 30 of player with iron boots named "&8»&e Schuhe &8«" to close then run [execute player command "/boots"]
+	format slot 32 of player with redstone named "&8×&c Kommt noch!" to close then run [execute player command "/13"]
+	format slot 36 of player with barrier named "&8×&c Schließen" to close
+
+
+
+command /chestmenu:
+	trigger:
+		wait 0.1 second
+		open chest with 5 rows named "&8»&e Profil" to player
+		wait 1 tick
+		format slot 0 of player with gray glass pane named " " to be unstealable
+		format slot 1 of player with gray glass pane named " " to be unstealable
+		format slot 2 of player with gray glass pane named " " to be unstealable
+		format slot 3 of player with gray glass pane named " " to be unstealable
+		format slot 4 of player with gray glass pane named " " to be unstealable
+		format slot 5 of player with gray glass pane named " " to be unstealable
+		format slot 6 of player with gray glass pane named " " to be unstealable
+		format slot 7 of player with gray glass pane named " " to be unstealable
+		format slot 8 of player with gray glass pane named " " to be unstealable
+		format slot 9 of player with gray glass pane named " " to be unstealable
+		format slot 10 of player with gray glass pane named " " to be unstealable
+		format slot 11 of player with gray glass pane named " " to be unstealable
+		format slot 12 of player with gray glass pane named " " to be unstealable
+		format slot 13 of player with gray glass pane named " " to be unstealable
+		format slot 15 of player with gray glass pane named " " to be unstealable
+		format slot 16 of player with gray glass pane named " " to be unstealable
+		format slot 17 of player with gray glass pane named " " to be unstealable
+		format slot 18 of player with gray glass pane named " " to be unstealable
+		format slot 19 of player with gray glass pane named " " to be unstealable
+		format slot 21 of player with gray glass pane named " " to be unstealable
+		format slot 23 of player with gray glass pane named " " to be unstealable
+		format slot 25 of player with gray glass pane named " " to be unstealable
+		format slot 26 of player with gray glass pane named " " to be unstealable
+		format slot 27 of player with gray glass pane named " " to be unstealable
+		format slot 28 of player with gray glass pane named " " to be unstealable
+		format slot 29 of player with gray glass pane named " " to be unstealable
+		format slot 31 of player with gray glass pane named " " to be unstealable
+		format slot 33 of player with gray glass pane named " " to be unstealable
+		format slot 34 of player with gray glass pane named " " to be unstealable
+		format slot 35 of player with gray glass pane named " " to be unstealable
+		format slot 37 of player with gray glass pane named " " to be unstealable
+		format slot 38 of player with gray glass pane named " " to be unstealable
+		format slot 39 of player with gray glass pane named " " to be unstealable
+		format slot 40 of player with gray glass pane named " " to be unstealable
+		format slot 41 of player with gray glass pane named " " to be unstealable
+		format slot 42 of player with gray glass pane named " " to be unstealable
+		format slot 43 of player with gray glass pane named " " to be unstealable
+		format slot 44 of player with gray glass pane named " " to be unstealable
+		wait 5 tick
+		format slot 12 of player with skull of "MHF_YouTube" parsed as offline player named "&8»&6 Köpfe &8«" to close then run [execute player command "/skulls"]
+		format slot 14 of player with lava bucket named "&8»&4 Effekte &8«" to close then run [execute player command "/effekte"]
+		format slot 20 of player with skull of "MHF_Chest" parsed as offline player named "&8»&2 Spezial Köpfe &8«" to close then run [execute player command "/specialskulls"]
+		format slot 22 of player with apple named "&8»&b Shop  &8«" to close then run [execute player command "/shop"]
+		format slot 24 of player with red clay named "&8»&2 Ballons &8«" to be unstealable
+		format slot 30 of player with iron boots named "&8»&e Schuhe &8«" to close then run [execute player command "/boots"]
+		format slot 32 of player with redstone named "&8×&c Kommt noch!" to close then run [execute player command "/13"]
+		format slot 36 of player with barrier named "&8×&c Schließen" to close
+
+
+command /boots:
+	trigger:
+		wait 0.1 second
+		open chest with 5 rows named "&8»&e Schuhe" to player
+		wait 1 tick
+		format slot 0 of player with gray glass pane named " " to be unstealable
+		format slot 1 of player with gray glass pane named " " to be unstealable
+		format slot 2 of player with gray glass pane named " " to be unstealable
+		format slot 3 of player with gray glass pane named " " to be unstealable
+		format slot 4 of player with gray glass pane named " " to be unstealable
+		format slot 5 of player with gray glass pane named " " to be unstealable
+		format slot 6 of player with gray glass pane named " " to be unstealable
+		format slot 7 of player with gray glass pane named " " to be unstealable
+		format slot 8 of player with gray glass pane named " " to be unstealable
+		format slot 9 of player with gray glass pane named " " to be unstealable
+		format slot 10 of player with gray glass pane named " " to be unstealable
+		format slot 11 of player with gray glass pane named " " to be unstealable
+		format slot 12 of player with gray glass pane named " " to be unstealable
+		format slot 13 of player with gray glass pane named " " to be unstealable
+		format slot 15 of player with gray glass pane named " " to be unstealable
+		format slot 16 of player with gray glass pane named " " to be unstealable
+		format slot 17 of player with gray glass pane named " " to be unstealable
+		format slot 18 of player with gray glass pane named " " to be unstealable
+		format slot 19 of player with gray glass pane named " " to be unstealable
+		format slot 21 of player with gray glass pane named " " to be unstealable
+		format slot 23 of player with gray glass pane named " " to be unstealable
+		format slot 25 of player with gray glass pane named " " to be unstealable
+		format slot 26 of player with gray glass pane named " " to be unstealable
+		format slot 27 of player with gray glass pane named " " to be unstealable
+		format slot 28 of player with gray glass pane named " " to be unstealable
+		format slot 29 of player with gray glass pane named " " to be unstealable
+		format slot 31 of player with gray glass pane named " " to be unstealable
+		format slot 33 of player with gray glass pane named " " to be unstealable
+		format slot 34 of player with gray glass pane named " " to be unstealable
+		format slot 35 of player with gray glass pane named " " to be unstealable
+		format slot 37 of player with gray glass pane named " " to be unstealable
+		format slot 38 of player with gray glass pane named " " to be unstealable
+		format slot 39 of player with gray glass pane named " " to be unstealable
+		format slot 40 of player with gray glass pane named " " to be unstealable
+		format slot 41 of player with gray glass pane named " " to be unstealable
+		format slot 42 of player with gray glass pane named " " to be unstealable
+		format slot 43 of player with gray glass pane named " " to be unstealable
+		format slot 44 of player with gray glass pane named " " to be unstealable
+		format slot 14 of player with gray glass pane named " " to be unstealable
+		format slot 30 of player with gray glass pane named " " to be unstealable
+		format slot 32 of player with gray glass pane named " " to be unstealable
+		wait 5 tick
+		format slot 22 of player with leather boots named "&8»&b Lederschuhe &8«" to close then run [execute player command "/lboots"]
+		format slot 20 of player with diamond boots named "&8»&b Diamantschuhe &8«" to close then run [execute player command "/dboots"]
+		format slot 24 of player with iron boots named "&8»&b Eisenschuhe &8«" to close then run [execute player command "/iboots"]
+		format slot 4 of player with chainmail boots named "&8»&b Kettenschuhe &8«" to close then run [execute player command "/cboots"]
+		format slot 40 of player with golden boots named "&8»&b Goldschuhe &8«" to close then run [execute player command "/gboots"]
+		format slot 44 of player with barrier named "&8»&b Schuhe ausziehen &8«" to close then run [execute player command "/unwear"]
+		format slot 36 of player with barrier named "&8×&c Zurück" to close then run [execute player command "/chestmenu"]
+		
+command /lboots:
+	trigger:
+		set player's boots to leather boots
+		
+command /dboots:
+	trigger:
+		set player's boots to diamond boots
+		
+command /iboots:
+	trigger:
+		set player's boots to iron boots
+		
+command /cboots:
+	trigger:
+		set player's boots to chainmail boots
+		
+command /gboots:
+	trigger:
+		set player's boots to gold boots
+		
+command /unwear:
+	trigger:
+		clear player's boots
+		
+command /skulls:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7. 
+	trigger:
+		wait 0.1 second
+		open chest with 5 rows named "&8»&e Köpfe" to player
+		wait 5 tick
+		format slot 22 of player with skull of "mhf_youtube" parsed as offline player named "&8×&b YouTube Kopf" to close then run [execute player command "/ytsk"]
+		format slot 20 of player with skull of "mhf_chest" parsed as offline player named "&8×&b Truhe Kopf" to close then run [execute player command "/chsk"]
+		format slot 24 of player with skull of "mhf_stone" parsed as offline player named "&8×&b Stein Kopf" to close then run [execute player command "/stsk"]
+		format slot 4 of player with skull of "mhf_arrowup" parsed as offline player named "&8×&b Pfeil Kopf" to close then run [execute player command "/arsk"]
+		format slot 40 of player with skull of "mhf_creeper" parsed as offline player named "&8×&b Creeper Kopf" to close then run [execute player command "/crsk"]
+		format slot 18 of player with skull of "mhf_twitter" parsed as offline player named "&8×&b Twitter Kopf" to close then run [execute player command "/twsk"]
+		format slot 26 of player with skull of "{@customskull}" parsed as offline player named "&8×&b {@customskull}'s Kopf" to close then run [execute player command "/cusk"]
+		format slot 36 of player with barrier named "&8×&c Zurück" to close then run [execute player command "/chestmenu"]
+		format slot 44 of player with barrier named "&8×&c Kopf entfernen" to close then run [execute player command "/rmsk"]
+		
+command /ytsk:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7.
+	trigger:
+		set helmet of player to ("mhf_youtube" parsed as offline player)'s skull
+		
+command /rmsk:
+	trigger:
+		clear player's helmet
+		
+command /chsk:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7.
+	trigger:
+		set helmet of player to ("mhf_chest" parsed as offline player)'s skull
+		
+command /stsk:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7.
+	trigger:
+		set helmet of player to ("mhf_stone" parsed as offline player)'s skull
+		
+command /arsk:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7.
+	trigger:
+		set helmet of player to ("mhf_arrowup" parsed as offline player)'s skull
+		
+command /crsk:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7.
+	trigger:
+		set helmet of player to ("mhf_creeper" parsed as offline player)'s skull
+		
+command /twsk:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7.
+	trigger:
+		set helmet of player to ("mhf_twitter" parsed as offline player)'s skull
+		
+command /cusk:
+	permission: lobby.skulls
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um dir Köpfe aufsetzen zu können.&7.
+	trigger:
+		set helmet of player to ("{@customskull}" parsed as offline player)'s skull
+		
+command /effekte:
+	permission: lobby.effects
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um Effekte nutzen zu können.&7. 
+	trigger:
+		wait 0.1 second
+		open chest with 3 rows named "&8»&e Effekte" to player
+		wait 0.1 second
+		format slot 13 of player with potion of speed named "&8×&b Speed" to close then run [execute player command "/speed"]
+		format slot 26 of player with barrier named "&8×&b Effekte entfernen" to close then run [execute player command "/rmeff"]
+		format slot 18 of player with barrier named "&8×&b Zurück" to close then run [execute player command "/chestmenu"]
+		
+		
+command /speed:
+	permission: lobby.effects
+	permission message: &7[&4{@servername}&7] &cDu brauchst einen Rang um Effekte nutzen zu können.&7.
+	trigger:
+		apply potion of speed of tier 2 to player for 3 minutes
+		
+command /rmeff:
+	trigger:
+		remove speed from player
+		
+command /shop:
+	trigger:
+		if {@shop} is true:
+			wait 0.1 second
+			open chest with 1 row named "&8»&0 S&2h&3o&cp" to player
+			wait 0.1 second
+			format slot 2 of player with potion of speed named "&8×&b Speed &7[&41000 Coins&7]" to close then run [execute player command "/buyspeed"]
+			format slot 4 of player with diamond boots named "&8×&b Diamantschuhe 3 Minuten &7[&41000 Coins&7]" to close then run [execute player command "/buydboots"]
+			format slot 6 of player with potion of speed named "&8×&b Speed &7[&41000 Coins&7]" to close then run [execute player command "/buyspeed"]
+		else:
+			send "&7[&4{@servername}&7] &cDer Shop ist zurzeit deaktiviert.&7."
+			
+command /buyspeed:
+	trigger:
+		if {coins.%player%} is greater than 999:
+			remove 1000 from {coins.%player%}
+			send "&7[&4{@servername}&7] &cDu hast &b1x Speed &cgekauft&7. "
+			apply potion of speed of tier 2 to player for 3 minutes
+		else:
+			send "&7[&4{@servername}&7] &cDu hast nicht genug Coins.&7."
+			play sound "ENTITY_VILLAGER_NO" with volume 100 and pitch 1 to player
+			
+command /buydboots:
+	trigger:
+		if {coins.%player%} is greater than 2999:
+			remove 3000 from {coins.%player%}
+			send "&7[&4{@servername}&7] &cDu hast &b1x Diamantschuhe &cgekauft&7. "
+			set player's boots to diamond boots
+			set {boots.%player%} to 1
+			wait 3 minutes
+			set {boots.%player%} to 0
+			clear player's boots
+		else:
+			send "&7[&4{@servername}&7] &cDu hast nicht genug Coins.&7."
+			play sound "ENTITY_VILLAGER_NO" with volume 100 and pitch 1 to player
+			
+command /enableshop [<text>]:
+	trigger:
+		wait 0.1 second
+		open chest with 1 row named "&8»&e Shopaktivierung" to player
+		wait 0.1 second
+		format slot 2 of player with lime wool named "&aAktivieren" to close then run [execute player command "/enshop"]
+		format slot 6 of player with red wool named "&cDeaktivieren" to close then run [execute player command "/disshop"]
+		
+
+	
+on join:
+	if {coins.%player%} is not set:
+		set {coins.%player%} to 0
+
+on first join:
+	if {coins.%player%} is not set:
+		set {coins.%player%} to 0
+
+command /coins:
+	trigger:
+		send "&7[&4{@servername}&7] &aDu hast &e%{coins.%player%}% &aCoins!"
+
+command /addcoins [<player>] [<number>]:
+	permission: lobby.addcoins
+	permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+	trigger:
+		if arg 1 is not set:
+			if arg 2 is not set:
+				send "&7[&4{@servername}&7] &cBenutze: /addcoins (spieler) (coins)"
+		if arg 1 is set:
+			add arg 2 to {coins.%arg-1%}
+			send "&7[&4{@servername}&7] &aDu hast &e%arg-1%&7, &e%arg-2% &aCoins &agegeben!"
+			send "&7[&4{@servername}&7] &aDu hast &e%arg-2% &aCoins erhalten!" to arg 1
+
+command /removecoins [<player>] [<number>]:
+	permission: lobby.removecoins
+	permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+	trigger:
+		if arg 1 is not set:
+			if arg 2 is not set:
+				send "&7[&4{@servername}&7] &cBenutze: /removecoins (spieler) (coins)"
+		if arg 1 is set:
+			remove arg 2 from {coins.%arg-1%}
+			send "&7[&4{@servername}&7] &aDu hast &e%arg-1%&7, &e%arg-2% &aCoins &aentfernt!"
+			send "&7[&4{@servername}&7] &aDir wurden &e%arg-2% &aCoins entfernt!" to arg 1
+
+command /setcoins [<player>] [<number>]:
+	permission: lobby.setcoins
+	permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+	trigger:
+		if arg 1 is not set:
+			if arg 2 is not set:
+				send "&7[&4{@servername}&7] &cBenutze: /setcoins (spieler) (coins)"
+		if arg 1 is set:
+			set {coins.%arg-1%} to arg 2
+			send "&7[&4{@servername}&7] &aDu hast &e%arg-1%'s &aCoins zu &e%arg-2% &agesetzt!"
+			send "&7[&4{@servername}&7] &aDeine Coins wurden zu &e%arg-2% &agesetzt!" to arg 1
+			
+			
+on join:
+	set {boots.%player%} to 0
+	if {cookieclicker.%player%} is not set:
+		set {cookieclicker.%player%} to 0
+
+command /cookieclicker [<Text>]:
+	aliases: ck
+	trigger:
+		send "&7[&4{@servername}&7] &aDu hast aktuell &b%{cookieclicker.%player%}% &aCookies&7."
+		
+command /rmcookies [<player>]:
+	permission: lobby.rmc
+	aliases: rmc
+	permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+	trigger:
+		if {cookieclicker.%arg-1%} is set:
+			if {cookieclicker.%arg-1%} is 0:
+				send "&7[&4{@servername}&7] &aDer Spieler hat noch keine Cookies&7."
+			else:
+				set {cookieclicker.%arg-1%} to 0
+				send "&7[&4{@servername}&7] &aDie Cookies des Spielers wurden zurückgesetzt&7."
+		else if {cookieklicker.%arg-1%} is not set:
+			send "&7[&4{@servername}&7] &aDer Spieler hat noch keine Cookies&7."
+			
+			
+command /addcookies:
+	permission: lobby.adc
+	permission message: &7[&4{@servername}&7] &cDu hast keine Berechtigung dazu&7. 
+	aliases: adc
+	trigger:
+		stop
+	
+			
+
+on click on a sponge:
+	loop all players:
+		add 1 to {cookieclicker.%player%}
+		send title "&a&l+1" with subtitle "Cookie" to player for 5 seconds 
+		if {@cookiesound} is true:
+			play sound "BLOCK_NOTE_HARP" with volume 100 and pitch 1 to player
+			play sound "BLOCK_NOTE_HARP" with volume 100 and pitch 2 to player
+			play sound "BLOCK_NOTE_HARP" with volume 100 and pitch 0 to player
+			
+on join:
+	if {boots.%player%} is 0:
+		clear player's boots
+	if {boots.%player%} is 1:
+		set player's boots to diamond boots
+		
+		
+command /cookieseller:
+	aliases: cs
+	trigger:
+		if {cookieclicker.%player%} is greater than 1:
+			send "&7[&4{@servername}&7] &cDu hast &b%{cookieclicker.%player%}% &cCookies verkauft&7. "
+			add {cookieclicker.%player%} to {coins.%player%}
+			remove {cookieclicker.%player%} from {cookieclicker.%player%}
+
+		else:
+			send "&7[&4{@servername}&7] &cDu musst mindestens einen Cookie haben&7. "
+			
+			
